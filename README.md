@@ -10,7 +10,7 @@
 
 &emsp;&emsp;**警告！！！本项目所涉及的内容仅供学习、交流，请勿将其用于非法用途！！！**
 
-![image](https://github.com/xiayouran/Musicer/Warning.png)
+![image](https://github.com/xiayouran/Musicer/blob/main/Warning.png)
 
 ## 网易云音乐
 - 2020/10/24 V1.0，目前可以实现付费音乐的下载，具体实现的详细步骤，可以参考我的[《Python爬虫：逆向分析网易云音乐加密参数》](https://blog.csdn.net/qq_42730750/article/details/108415551)这篇博客
