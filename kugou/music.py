@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+# @Time    : 2021/4/20 20:42
+# @Author  : XiaYouRan
+# @Email   : youran.xia@foxmail.com
+# @File    : music.py
+# @Software: PyCharm
+
+
+# -*- coding: utf-8 -*-
 # @Time    : 2020/10/24 1:20
 # @Author  : XiaYouRan
 # @Email   : youran.xia@foxmail.com
@@ -13,6 +21,7 @@ import json
 import requests
 import re
 import os
+from urllib.parse import quote
 
 
 class KuGouMusic(object):
@@ -39,19 +48,19 @@ class KuGouMusic(object):
         url = 'https://complexsearch.kugou.com/v2/search/song?callback=callback123&keyword={0}' \
               '&page=1&pagesize=30&bitrate=0&isfuzzy=0&tag=em&inputtype=0&platform=WebFilter&userid=-1' \
               '&clientver=2000&iscorrection=1&privilege_filter=0&srcappid=2919&clienttime={1}&' \
-              'mid={2}&uuid={3}&dfid=-&signature={4}'.format(text, k, k, k, signature.upper())
+              'mid={2}&uuid={3}&dfid=-&signature={4}'.format(quote(text), k, k, k, signature.upper())
         return url
 
     def get_html(self, url):
         # 加一个cookie
-        cookie = 'kg_mid=61a73ea098eb98e7c6f4fbc66cd7f367; kg_dfid=3LfODQ2G5XMN0x1liv3DeyjX; kg_dfid_collect=d41d8cd98f00b204e9800998ecf8427e; Hm_lvt_aedee6983d4cfc62f509129360d6bb3d=1599906321; Hm_lpvt_aedee6983d4cfc62f509129360d6bb3d=1599922649'.split(
+        cookie = 'kg_mid=68aa6f0242d4192a2a9e2b91e44c226d; kg_dfid=4DoTYZ0DYq9M3ctVHp0cBghm; kg_dfid_collect=d41d8cd98f00b204e9800998ecf8427e; Hm_lvt_aedee6983d4cfc62f509129360d6bb3d=1618922741,1618923483; Hm_lpvt_aedee6983d4cfc62f509129360d6bb3d=1618924198'.split(
             '; ')
         cookie_dict = {}
         for co in cookie:
             co_list = co.split('=')
             cookie_dict[co_list[0]] = co_list[1]
         try:
-            response = requests.get(url, headers=self.headers, cookies=cookie_dict)
+            response = requests.get(url, headers=self.headers, cookies=cookie_dict, verify=False)
             response.raise_for_status()
             response.encoding = 'utf-8'
             return response.text
@@ -75,6 +84,7 @@ class KuGouMusic(object):
             song_name = song['SongName']
             song_name = re.sub(pattern, '', song_name)
             album_name = song['AlbumName']
+            album_id = song['AlbumID']
             # 时长
             duration = song['Duration']
             file_hash = song['FileHash']
@@ -92,7 +102,7 @@ class KuGouMusic(object):
             mv_hash = song['MvHash']
             m4a_size = song['M4aSize']
 
-            hash_list.append([file_hash, hq_file_hash, sq_file_hash])
+            hash_list.append([file_hash, hq_file_hash, sq_file_hash, album_id])
 
             print('{0:{5}<5}{1:{5}<15}{2:{5}<10}{3:{5}<10}{4:{5}<20}'.format(count, song_name, singer_name, duration, album_name,
                                                                              chr(12288)))
@@ -120,7 +130,7 @@ class KuGouMusic(object):
             print("下载完毕!")
 
 
-if __name__ == '__main__':
+def kg_main():
     kg = KuGouMusic()
     search_info = input("请输入歌名或歌手: ")
     search_url = kg.MD5Encrypt(search_info)
@@ -133,7 +143,10 @@ if __name__ == '__main__':
         if input_index == -1:
             break
         download_info = hash_list[input_index]
-        song_url = 'https://wwwapi.kugou.com/yy/index.php?r=play/getdata&hash={}'.format(download_info[0])
+        song_url = 'https://wwwapi.kugou.com/yy/index.php?r=play/getdata&hash={0}&mid=68aa6f0242d4192a2a9e2b91e44c226d&album_id={1}'.format(download_info[0], download_info[3])
         song_text = kg.get_html(song_url)
         kg.save_file(song_text)
 
+
+if __name__ == '__main__':
+    kg_main()

@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-
+# @Time    : 2021/4/20 20:34
+# @Author  : XiaYouRan
+# @Email   : youran.xia@foxmail.com
+# @File    : music.py
+# @Software: PyCharm
+
+
+# -*- coding: utf-8 -*-
 # @Time    : 2020/10/24 0:30
 # @Author  : XiaYouRan
 # @Email   : youran.xia@foxmail.com
@@ -142,7 +150,7 @@ class WangYiYunMusic(object):
             print("下载完毕!")
 
 
-if __name__ == '__main__':
+def wyy_main():
     id_url = 'https://music.163.com/weapi/cloudsearch/get/web?csrf_token='
     song_url = 'https://music.163.com/weapi/song/enhance/player/url/v1?csrf_token='
 
@@ -181,3 +189,5 @@ if __name__ == '__main__':
         wyy.save_file(song_text, download_info)
 
 
+if __name__ == '__main__':
+    main()
