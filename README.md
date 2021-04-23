@@ -16,12 +16,15 @@
 `
 	# 先安装环境所需的依赖包
 	pip install -r requirements.txt
+`
+`
 	# 运行项目
 	python main.py
 `
 ## 运行效果如下:
 `
 
+	D:\ProgramData\Anaconda3\envs\Spider\python.exe E:/Program/Python/Spider/Musicer/main.py
 
 			###   ###       ###     ###     ######    ######     ######   ########   ####### 
 		   ## ## ## ##      ###     ###   ###           ##     ###        ###        ##   ### 
