@@ -13,18 +13,16 @@
 ![image](https://github.com/xiayouran/Musicer/raw/main/vip.png)
 
 ## 食用方式
-`
+```
 	# 先安装环境所需的依赖包
 	pip install -r requirements.txt
-`
-`
+
 	# 运行项目
 	python main.py
-`
-## 运行效果如下:
-`
+```
 
-	D:\ProgramData\Anaconda3\envs\Spider\python.exe E:/Program/Python/Spider/Musicer/main.py
+## 运行效果如下:
+```
 
 			###   ###       ###     ###     ######    ######     ######   ########   ####### 
 		   ## ## ## ##      ###     ###   ###           ##     ###        ###        ##   ### 
@@ -50,9 +48,7 @@
 	请输入要下载歌曲的序号(-1退出): 0
 	下载完毕!
 	请输入要下载歌曲的序号(-1退出): -1
-
-	Process finished with exit code 0
-`
+```
 
 ## 更新记录
 - 2020/10/24 项目开源，实现了网易云付费音乐、酷狗音乐爬取
