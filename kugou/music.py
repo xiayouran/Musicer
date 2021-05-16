@@ -21,7 +21,7 @@ import json
 import requests
 import re
 import os
-from urllib.parse import quote
+from urllib import parse
 
 
 class KuGouMusic(object):
@@ -48,7 +48,7 @@ class KuGouMusic(object):
         url = 'https://complexsearch.kugou.com/v2/search/song?callback=callback123&keyword={0}' \
               '&page=1&pagesize=30&bitrate=0&isfuzzy=0&tag=em&inputtype=0&platform=WebFilter&userid=-1' \
               '&clientver=2000&iscorrection=1&privilege_filter=0&srcappid=2919&clienttime={1}&' \
-              'mid={2}&uuid={3}&dfid=-&signature={4}'.format(quote(text), k, k, k, signature.upper())
+              'mid={2}&uuid={3}&dfid=-&signature={4}'.format(parse.quote(text), k, k, k, signature.upper())
         return url
 
     def get_html(self, url):
