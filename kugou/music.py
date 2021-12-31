@@ -22,6 +22,10 @@ import requests
 import re
 import os
 from urllib import parse
+import warnings
+
+
+warnings.filterwarnings('ignore')
 
 
 class KuGouMusic(object):

@@ -40,11 +40,12 @@ class KuWoMusic(object):
                         'Host': 'www.kuwo.cn',
                         'Referer': ''}
 
-    def get_html(self, url, search_key=None):
-        if 'rid' not in url:
+    def get_html(self, url, search_key=None, mid=None):
+        if 'mid' not in url:
             self.headers['Referer'] = 'http://www.kuwo.cn/search/list?key=' + search_key
         else:
-            del self.headers['Referer']
+            # del self.headers['Referer']
+            self.headers['Referer'] = 'http://www.kuwo.cn/play_detail/{}'.format(mid)
             del self.headers['csrf']
         try:
             response = requests.get(url, headers=self.headers, verify=False)
@@ -80,7 +81,7 @@ class KuWoMusic(object):
         filepath = './download'
         if not os.path.exists(filepath):
             os.mkdir(filepath)
-        song_url = json.loads(song_text)['url']
+        song_url = json.loads(song_text)['data']['url']
         del self.headers['Host']
         response = requests.get(song_url, headers=self.headers)
         audio_name = download_info[2] + ' - ' + download_info[1]
@@ -106,8 +107,9 @@ def kw_main():
         # 流畅音质  128k
         # 高频音质  192k
         # 超品音质  320k
-        song_info_url = 'http://www.kuwo.cn/url?rid={0}&type=convert_url3&br=128kmp3'.format(download_info[0])
-        song_text = kw.get_html(song_info_url)
+        # song_info_url = 'http://www.kuwo.cn/url?rid={0}&type=convert_url3&br=128kmp3'.format(download_info[0])
+        song_info_url = 'http://www.kuwo.cn/api/v1/www/music/playUrl?mid={}&type=music&httpsStatus=1&br=128kmp3'.format(download_info[0])
+        song_text = kw.get_html(song_info_url, mid=download_info[0])
         kw.save_file(song_text, download_info)
 
 
