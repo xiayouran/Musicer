@@ -117,12 +117,11 @@ class WangYiYunMusic(object):
 
     def parse_text(self, text):
         ids_list = json.loads(text)['result']['songs']
-        count = 0
         info_list = []
         print('{:*^80}'.format('搜索结果如下'))
         print('{0:{5}<5}{1:{5}<20}{2:{5}<10}{3:{5}<10}{4:{5}<20}'.format('序号', '歌名', '歌手', '时长(s)', '专辑', chr(12288)))
         print('{:-^84}'.format('-'))
-        for id_info in ids_list:
+        for count, id_info in enumerate(ids_list):
             song_name = id_info['name']
             id = id_info['id']
             time = id_info['dt'] // 1000
@@ -131,10 +130,9 @@ class WangYiYunMusic(object):
             singer = id_info['ar'][0]['name']
             info_list.append([id, song_name, singer])
             print('{0:{5}<5}{1:{5}<20}{2:{5}<10}{3:{5}<10}{4:{5}<20}'.format(count, song_name, singer, time, album_name, chr(12288)))
-            count += 1
-            if count == 8:
-                # 为了测试方便, 这里只显示了9条数据
-                break
+            # if count == 8:
+            #     # 为了测试方便, 这里只显示了9条数据
+            #     break
         print('{:*^80}'.format('*'))
         return info_list
 
@@ -144,6 +142,7 @@ class WangYiYunMusic(object):
             os.mkdir(filepath)
         filename = download_info[1] + '-' + download_info[2]
         music_url = json.loads(song_text)['data'][0]['url']
+        assert music_url, "音乐<<{}>>解析出错, 可能是网站更新了代码！！！请把信息反馈给作者, 感谢^_^".format(filename)
         response = requests.get(music_url, headers=self.headers)
         with open(os.path.join(filepath, filename) + '.mp3', 'wb') as f:
             f.write(response.content)
@@ -179,8 +178,8 @@ def wyy_main():
         download_info = info_list[input_index]
         song_d = {
             "ids": str([download_info[0]]),
-            "level": "standard",
-            "encodeType": "aac",
+            "level": "standard",    # exhigh
+            "encodeType": "aac",    # aac, mp3, flac
             "csrf_token": ""
         }
         song_from_data = encrypt.resultEncrypt(str(song_d))

@@ -61,9 +61,8 @@ class KuWoMusic(object):
         print('{0:{5}<5}{1:{5}<15}{2:{5}<10}{3:{5}<10}{4:{5}<20}'.format('序号', '歌名', '歌手', '时长(s)', '专辑', chr(12288)))
         print('{:-^84}'.format('-'))
         song_list = json.loads(text)['data']['list']
-        count = 0
         info_list = []
-        for song in song_list:
+        for count, song in enumerate(song_list):
             singer_name = song['artist']
             song_name = song['name']
             album_name = song['album']
@@ -71,9 +70,9 @@ class KuWoMusic(object):
             time_str = get_songtime(song['duration'])
             info_list.append([rid, song_name, singer_name])
             print('{0:{5}<5}{1:{5}<20}{2:{5}<10}{3:{5}<10}{4:{5}<20}'.format(count, song_name, singer_name, time_str, album_name, chr(12288)))
-            count += 1
-            if count == 10:
-                break
+            # count += 1
+            # if count == 10:
+            #     break
         print('{:*^80}'.format('*'))
         return info_list
 

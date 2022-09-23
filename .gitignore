@@ -1,0 +1,7 @@
+# PyCharm files
+.idea
+*/__pychche__
+
+# download files
+download
+*/download

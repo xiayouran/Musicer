@@ -73,13 +73,12 @@ class KuGouMusic(object):
             return '请求异常'
 
     def parse_text(self, text):
-        count = 0
         hash_list = []
         print('{:*^80}'.format('搜索结果如下'))
         print('{0:{5}<5}{1:{5}<15}{2:{5}<10}{3:{5}<10}{4:{5}<20}'.format('序号', '歌名', '歌手', '时长(s)', '专辑', chr(12288)))
         print('{:-^84}'.format('-'))
         song_list = json.loads(text)['data']['lists']
-        for song in song_list:
+        for count, song in enumerate(song_list):
             singer_name = song['SingerName']
             # <em>本兮</em> 正则提取
             # 先匹配'</em>'这4中字符, 然后将其替换
@@ -110,10 +109,10 @@ class KuGouMusic(object):
 
             print('{0:{5}<5}{1:{5}<15}{2:{5}<10}{3:{5}<10}{4:{5}<20}'.format(count, song_name, singer_name, duration, album_name,
                                                                              chr(12288)))
-            count += 1
-            if count == 10:
-                # 为了测试方便, 这里只显示了10条数据
-                break
+            # count += 1
+            # if count == 10:
+            #     # 为了测试方便, 这里只显示了10条数据
+            #     break
         print('{:*^80}'.format('*'))
         return hash_list
 
@@ -128,9 +127,12 @@ class KuGouMusic(object):
         img_url = text['img']
         lyrics = text['lyrics']
         play_url = text['play_url']
-        response = requests.get(play_url, headers=self.headers)
-        with open(os.path.join(filepath, audio_name) + '.mp3', 'wb') as f:
-            f.write(response.content)
+        # self.headers['Range'] = 'bytes=0-960143'
+        # response = requests.get(play_url, headers=self.headers, stream=True)
+        with requests.get(play_url, headers=self.headers, stream=True) as feq:
+            with open(os.path.join(filepath, audio_name) + '.mp3', 'wb') as f:
+                for chunk in feq.iter_content(chunk_size=960143):
+                    f.write(chunk)
             print("下载完毕!")
 
 
