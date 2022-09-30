@@ -1,4 +1,12 @@
-# Musicer
+<p align="center"><h1 align="center" style="font-family:Consolas, Monaco, 'Andale Mono', monospace">Musicer</h1></p>
+
+<p align="center">
+    <a href=""><img src="https://img.shields.io/badge/author-xiayouran-orange.svg"></a>
+    <a href="./LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-blue.svg"></a>
+    <a href=""><img src="https://img.shields.io/badge/python-3.7.13+-aff.svg"></a>
+    <a href=""><img src="https://img.shields.io/badge/os-linux%2C%20win%2C%20mac-pink.svg"></a>
+</p>
+
 旨在将网易云、酷狗、QQ、酷我等各音乐平台集于一体
 
 ## 项目概述
