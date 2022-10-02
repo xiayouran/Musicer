@@ -129,6 +129,12 @@ class KuGouMusic(object):
         play_url = text['play_url']
         # self.headers['Range'] = 'bytes=0-960143'
         # response = requests.get(play_url, headers=self.headers, stream=True)
+
+        # 文件命名限制
+        limit_strs = ['\\', '/', ':', '*', '?', '<', '>', '|']
+        for s in limit_strs:
+            audio_name = audio_name.replace(s, '-')
+
         with requests.get(play_url, headers=self.headers, stream=True) as feq:
             with open(os.path.join(filepath, audio_name) + '.mp3', 'wb') as f:
                 for chunk in feq.iter_content(chunk_size=960143):

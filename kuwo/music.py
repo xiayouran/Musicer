@@ -84,6 +84,12 @@ class KuWoMusic(object):
         del self.headers['Host']
         response = requests.get(song_url, headers=self.headers)
         audio_name = download_info[2] + ' - ' + download_info[1]
+
+        # 文件命名限制
+        limit_strs = ['\\', '/', ':', '*', '?', '<', '>', '|']
+        for s in limit_strs:
+            audio_name = audio_name.replace(s, '-')
+
         with open(os.path.join(filepath, audio_name) + '.mp3', 'wb') as f:
             f.write(response.content)
             print("下载完毕!")

@@ -144,6 +144,12 @@ class WangYiYunMusic(object):
         music_url = json.loads(song_text)['data'][0]['url']
         assert music_url, "音乐<<{}>>解析出错, 可能是网站更新了代码！！！请把信息反馈给作者, 感谢^_^".format(filename)
         response = requests.get(music_url, headers=self.headers)
+
+        # 文件命名限制
+        limit_strs = ['\\', '/', ':', '*', '?', '<', '>', '|']
+        for s in limit_strs:
+            filename = filename.replace(s, '-')
+
         with open(os.path.join(filepath, filename) + '.mp3', 'wb') as f:
             f.write(response.content)
             print("下载完毕!")
